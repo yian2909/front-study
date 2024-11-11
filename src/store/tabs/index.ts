@@ -10,15 +10,29 @@ export type TabState = {
   tabList: Tab[]
 }
 
-export const useTabStore = defineStore('tabStore', () => {
-  const tabList = ref<Tab[]>([])
+export const useTabStore = defineStore(
+  'tabStore',
+  () => {
+    const tabList = ref<Tab[]>([])
 
-  const getTab = computed(() => tabList.value)
+    const getTab = computed(() => tabList.value)
 
-  const addTab = (tab: Tab) => {
-    if (tabList.value.some((item) => item.path === tab.path)) return
-    tabList.value.push(tab)
+    const addTab = (tab: Tab) => {
+      if (tabList.value.some((item) => item.path === tab.path)) return
+      tabList.value.push(tab)
+    }
+
+    return { tabList, getTab, addTab }
+  },
+  {
+    persist: {
+      enabled: true,
+      strategies: [
+        {
+          key: 'tabStore',
+          storage: localStorage
+        }
+      ]
+    }
   }
-
-  return { tabList, getTab, addTab }
-})
+)
