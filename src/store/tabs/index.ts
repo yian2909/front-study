@@ -19,7 +19,11 @@ export const useTabStore = defineStore(
 
     const addTab = (tab: Tab) => {
       if (tabList.value.some((item) => item.path === tab.path)) return
-      tabList.value.push(tab)
+      if (tab.path == '/dashboard') {
+        tabList.value.unshift(tab)
+      } else {
+        tabList.value.push(tab)
+      }
     }
 
     return { tabList, getTab, addTab }
