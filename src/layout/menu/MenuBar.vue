@@ -3,6 +3,7 @@
   <el-menu
     :default-active="activeIndex"
     class="el-menu-vertical-demo"
+    :collapse="isCollapse"
     unique-opened
     background-color="#304156"
     @open="handleOpen"
@@ -15,11 +16,18 @@
 
 <script setup lang="ts">
 import { reactive, computed } from 'vue'
+import { useMenuStore } from '@/store/menu/index'
 import MenuItem from '@/layout/menu/MenuItem.vue'
 import MenuLogo from '@/layout/menu/MenuLogo.vue'
 
 import { useRoute } from 'vue-router'
 const route = useRoute()
+
+const store = useMenuStore()
+
+const isCollapse = computed(() => {
+  return store.getCollapse
+})
 
 const activeIndex = computed(() => {
   const { path } = route
