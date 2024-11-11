@@ -31,7 +31,8 @@ export default [
     rules: {
       'no-unused-vars': 'warn',
       '@typescript-eslint/no-unused-vars': 'warn',
-      'vue/multi-word-component-names': 'off'
+      'vue/multi-word-component-names': 'off',
+      '@typescript-eslint/no-explicit-any': 'warn'
     }
   },
   prettierRecommended
