@@ -1,6 +1,6 @@
 <template>
-  <el-container class="layout">
-    <el-aside width="auto" class="asside">
+  <el-container class="mycontainer">
+    <el-aside width="auto" class="leftmenu">
       <menu-bar></menu-bar>
     </el-aside>
     <el-container>
@@ -8,6 +8,7 @@
         <Header></Header>
       </el-header>
       <el-main class="main">
+        <Tabs></Tabs>
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -17,12 +18,13 @@
 <script setup lang="ts">
 import Header from './header/Header.vue'
 import MenuBar from './menu/MenuBar.vue'
+import Tabs from '@/store/tabs/Tabs.vue'
 </script>
 
 <style lang="scss">
-.layout {
+.mycontainer {
   height: 100%;
-  .asside {
+  .leftmenu {
     background-color: #304156;
   }
   .header {
@@ -31,7 +33,7 @@ import MenuBar from './menu/MenuBar.vue'
     background-color: #009688;
   }
   .main {
-    background-color: darkgoldenrod;
+    background-color: #ffffff;
   }
 }
 </style>
