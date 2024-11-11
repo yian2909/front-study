@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div>
     <h1>Hello, Element Plus!</h1>
     <el-button type="primary" @click="handleClick">点击我</el-button>
@@ -23,4 +23,35 @@ const handleClick = () => {
 h1 {
   color: #42b983;
 }
-</style>
+</style> -->
+
+<template>
+  <h1>{{ count }}</h1>
+  <h2>{{ msg }}</h2>
+  <el-button type="primary" size="default" @click="addBtn">新增</el-button>
+  <el-icon>
+    <search />
+  </el-icon>
+</template>
+
+<script setup lang="ts">
+import { useTestStore } from '@/store/test/index'
+import { storeToRefs } from 'pinia'
+
+const store = useTestStore()
+const { count, msg } = storeToRefs(store)
+
+const addBtn = () => {
+  // store.count++;
+
+  // store.setCount(++store.count);
+
+  // store.$patch({
+  //   count: ++store.count,
+  // });
+
+  store.$patch((state) => {
+    state.count = ++state.count
+  })
+}
+</script>
