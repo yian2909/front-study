@@ -173,7 +173,7 @@ import SysDialog from '@/components/SysDialog.vue'
 import useDialog from '@/hooks/useDialog'
 import { FormInstance, ElMessage } from 'element-plus'
 import SelectChecked from '@/components/SelectChecked.vue'
-import { getSelectApi } from '@/api/role'
+import { getSelectApi } from '@/api/role/index'
 import {
   addApi,
   getListApi,
@@ -280,7 +280,7 @@ const addBtn = () => {
   options.value = []
   bindValue.value = []
   //获取下拉数据
-  getList()
+  getSelect()
 
   nextTick(() => {
     //清空下拉数据
