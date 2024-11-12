@@ -70,7 +70,15 @@
               </el-form-item>
             </el-col>
           </el-row>
+
           <el-row>
+            <el-col :span="12" :offset="0">
+              <el-form-item prop="roleId" label="角色：">
+                <SelectChecked :options="options" @selected="selected">
+                </SelectChecked>
+              </el-form-item>
+            </el-col>
+
             <el-col :span="12" :offset="0">
               <el-form-item prop="username" label="账户：">
                 <el-input v-model="addModel.username"></el-input>
@@ -89,10 +97,12 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import SysDialog from '@/components/SysDialog.vue'
 import useDialog from '@/hooks/useDialog'
 import { FormInstance } from 'element-plus'
+import SelectChecked from '@/components/SelectChecked.vue'
+import { getSelectApi } from '@/api/role'
 
 //表单ref属性
 const addForm = ref<FormInstance>()
@@ -116,7 +126,8 @@ const addModel = reactive({
   phone: '',
   email: '',
   gender: '0',
-  nickName: ''
+  nickName: '',
+  roleId: ''
 })
 
 //表单验证规则
@@ -166,6 +177,23 @@ const addBtn = () => {
   onShow()
 }
 
+//下拉数据
+let options = ref([])
+
+//勾选的值
+const selected = (value: Array<string | number>) => {
+  console.log(value)
+  addModel.roleId = value.join(',')
+  console.log(addModel)
+}
+
+const getSelect = async () => {
+  let res = await getSelectApi()
+  if (res && res.code == 200) {
+    options.value = res.data
+  }
+}
+
 //提交表单
 const commit = () => {
   //验证表单
@@ -175,6 +203,10 @@ const commit = () => {
     }
   })
 }
+
+onMounted(() => {
+  getSelect()
+})
 </script>
 
 <style scoped></style>
