@@ -1,13 +1,15 @@
+<!-- eslint-disable vue/no-deprecated-v-bind-sync -->
 <template>
   <el-main>
     <!-- 搜索栏 -->
-    <el-form :model="searchParm" :inline="true" size="default"
-      ><el-form-item>
+    <el-form :model="searchParm" :inline="true" size="default">
+      <el-form-item>
         <el-input
           placeholder="请输入关键字"
           v-model="searchParm.roleName"
         ></el-input>
       </el-form-item>
+
       <el-form-item>
         <el-button icon="Search" @click="searchBtn">搜索</el-button>
         <el-button icon="Close" type="danger" plain @click="resetBtn"
@@ -17,7 +19,7 @@
       </el-form-item>
     </el-form>
 
-    <el-table :height="tableHeight" :data="tableList" borderstripe>
+    <el-table :height="tableHeight" :data="tableList" border stripe>
       <el-table-column prop="roleName" label="角色名称"></el-table-column>
       <el-table-column prop="remark" label="角色备注"></el-table-column>
       <el-table-column label="操作" width="220" align="center">
@@ -43,7 +45,7 @@
     <el-pagination
       @size-change="sizeChange"
       @current-change="currentChange"
-      v-model:current-page="searchParm.currentPage"
+      :current-page.sync="searchParm.currentPage"
       :page-sizes="[10, 20, 40, 80, 100]"
       :page-size="searchParm.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
@@ -92,10 +94,13 @@ import useInstance from '@/hooks/useInstance'
 
 //获取全局golbal
 const { global } = useInstance()
+
 //表单ref属性
 const addRef = ref<FormInstance>()
+
 //弹框属性
 const { dialog, onClose, onShow } = useDialog()
+
 //表单绑定的对象
 const searchParm = reactive({
   currentPage: 1,
@@ -103,8 +108,10 @@ const searchParm = reactive({
   roleName: '',
   total: 0
 })
+
 //判断新增还是编辑的标识 0:新增 1：编辑
 const tags = ref('')
+
 //新增按钮
 const addBtn = () => {
   tags.value = '0'
@@ -115,12 +122,14 @@ const addBtn = () => {
   //清空表单
   addRef.value?.resetFields()
 }
+
 //新增表单对象
 const addModel = reactive({
   roleId: '',
   roleName: '',
   remark: ''
 })
+
 //表单验证规则
 const rules = reactive({
   roleName: [
@@ -131,6 +140,7 @@ const rules = reactive({
     }
   ]
 })
+
 //表单提交
 const commit = () => {
   addRef.value?.validate(async (valid) => {
@@ -153,6 +163,7 @@ const commit = () => {
     }
   })
 }
+
 //编辑按钮
 const editBtn = (row: SysRole) => {
   tags.value = '1'
@@ -168,6 +179,7 @@ const editBtn = (row: SysRole) => {
   //清空表单
   addRef.value?.resetFields()
 }
+
 //删除按钮
 const deleteBtn = async (roleId: string) => {
   console.log(roleId)
@@ -183,20 +195,25 @@ const deleteBtn = async (roleId: string) => {
     }
   }
 }
+
 //页容量改变时触发
 const sizeChange = (size: number) => {
   searchParm.pageSize = size
   getList()
 }
+
 //页数改变时触发
 const currentChange = (page: number) => {
   searchParm.currentPage = page
   getList()
 }
+
 //表格高度
 const tableHeight = ref(0)
+
 //表格数据
 const tableList = ref([])
+
 //查询列表
 const getList = async () => {
   let res = await getListApi(searchParm)
@@ -208,16 +225,19 @@ const getList = async () => {
     searchParm.total = res.data.total
   }
 }
+
 //搜索
 const searchBtn = () => {
   getList()
 }
+
 //重置
 const resetBtn = () => {
   searchParm.roleName = ''
   searchParm.currentPage = 1
   getList()
 }
+
 //页面加载时调用
 onMounted(() => {
   nextTick(() => {
