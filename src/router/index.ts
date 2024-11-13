@@ -83,6 +83,11 @@ const routes: Array<RouteRecordRaw> = [
         meta: { title: '商品信息', icon: 'Wallet', roles: ['sys:goodsList'] }
       }
     ]
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/login/login.vue')
   }
 ]
 
