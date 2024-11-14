@@ -9,12 +9,15 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import { createPinia } from 'pinia'
 import piniaPersist from 'pinia-plugin-persist'
+import * as echarts from 'echarts'
+
 const pinia = createPinia()
 pinia.use(piniaPersist)
 
 import myConfirm from './utils/myConfirm'
 const app = createApp(App)
 app.config.globalProperties.$myConfirm = myConfirm
+app.config.globalProperties.$echarts = echarts
 app
   .use(ElementPlus, {
     locale: zhCn
